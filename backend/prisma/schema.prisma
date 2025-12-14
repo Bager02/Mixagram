@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  // @ts-ignore
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id             Int      @id @default(autoincrement())
+  user_id        Int
+  user           User     @relation(fields: [user_id], references: [id])
+  post_image_url String?
+  likes          Int      @default(0)
+  title          String
+  description    String
+  created_at     DateTime @default(now())
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  email         String   @unique
+  password      String
+  profile_image String? 
+  bio           String?
+  created_at    DateTime @default(now())
+
+  posts         Post[]   
+}
