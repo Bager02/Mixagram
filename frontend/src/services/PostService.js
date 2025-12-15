@@ -3,7 +3,9 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 export async function fetchPosts() {
-    const res = await fetch(`${API_URL}/posts`);
+    const res = await fetch(`${API_URL}/posts`,{
+        credentials: "include",
+    });
     return res.json();
 }
 

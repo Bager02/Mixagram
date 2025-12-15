@@ -5,7 +5,7 @@ import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
-router.get("/", fetchPosts);
-router.post("/new-post", upload.single('post_image'), createPost);
+router.get("/", requireAuth, fetchPosts);
+router.post("/new-post", upload.single('post_image'), requireAuth, createPost);
 
 export default router;

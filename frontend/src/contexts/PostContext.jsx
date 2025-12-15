@@ -11,7 +11,7 @@ export const PostProvider = ({ children }) => {
             try { 
                 const data = await fetchPosts();
                 console.log("Fetched posts:", data);
-                setPosts(data);
+                setPosts(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error("Failed to fetch posts:", error);
             }

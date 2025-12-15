@@ -3,6 +3,9 @@ import { createUserService } from "../services/AuthServices.js";
 export const createUser = async (req, res) => {
     try {
         const user = await createUserService(req.body);
+
+        req.session.userId = user.id;
+
         res.status(201).json({
             id: user.id,
             username: user.username,
