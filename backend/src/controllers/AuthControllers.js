@@ -1,4 +1,4 @@
-import { createUserService } from "../services/AuthServices.js";
+import { createUserService, loginService } from "../services/AuthServices.js";
 
 export const register = async (req, res) => {
     try {
@@ -39,4 +39,21 @@ export const logout = async (req, res) => {
 
     res.clearCookie("connect.sid", { path: "/" }); // connect.sid is the name of session cookie, and { path: "/" } is the default path where the cookie was created. this is so the right cookie gets deleted.
     res.status(200).json({ message: "Logged out successfully" });
+};
+
+export const login = async (req, res) => {
+    try {
+        const user = await loginService(req.body)
+
+        req.session.userId = user.id;
+
+        res.status(200).json({
+            id: user.id,
+            username: user.username,
+            email: user.email,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ error: err.message });
+    }
 };

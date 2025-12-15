@@ -63,6 +63,7 @@
     color: #7b9181;
     transition: transform 0.12s ease, color 0.12s ease;
     margin-right: 4px;
+    margin-left: -8px;
     padding: 6px 8px;          
     border-radius: 25%;
     text-align: center;
