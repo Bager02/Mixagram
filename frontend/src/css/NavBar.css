@@ -1,0 +1,88 @@
+body {
+    background: linear-gradient(160deg, #ecfff2, #79b083);
+    min-height: 100vh;
+  }
+
+.navbar-links {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    margin: 0 auto;
+    max-width: 70%;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 14px;
+    padding: 12px 22px;
+    background: linear-gradient(320deg, #386547, #52975f);
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.upload-post a {
+    text-decoration: none;
+    color: #fdfdfd;
+    font-weight: 600;
+
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+
+    transition: 0.25s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #fdfdfd;
+    font-size: 24px;
+}
+
+.upload-post a:hover {
+    color: #141414;
+    background-color: #e8e8e8;
+}
+
+.home-link a,
+.user-profile-link a {
+    text-decoration: none;
+    color: #fdfdfd;
+    background-color: rgb(36, 70, 44);
+    font-weight: 500;
+    font-size: 18px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+}
+
+.upload-post a {
+    font-size: 24px;
+    background-color: rgb(36, 70, 44);
+}
+
+.upload-post a:hover {
+    background-color: #ececec;
+}
+
+.home-link a:hover {
+    color: #141414;
+    background-color: #e8e8e8;
+}
+
+.user-profile-link a:hover {
+    color: #141414;
+    background-color: #e8e8e8;
+}
+
+@media (max-width: 600px) {
+    .navbar-links {
+        flex-direction: row;
+        padding: 10px 12px;
+    }
+
+    .upload-post a,
+    .home-link a,
+    .user-profile-link a {
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+}

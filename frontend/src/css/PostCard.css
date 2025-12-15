@@ -1,0 +1,94 @@
+.post {
+    width: 500px;
+    margin: 22px auto;
+    border-radius: 18px;
+    overflow: hidden;
+    background-color: #e4ffe9;
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.06);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    font-family: "Poppins", sans-serif;
+}
+
+.post:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 7px 18px rgba(0,0,0,0.12);
+}
+
+.post-user-info {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e6e6e6;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.post-image img {
+    width: 100%;
+    display: block;
+}
+
+.post-content {
+    padding: 14px 16px;
+}
+
+.like-button {
+    border: none;
+    background: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #777;
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.like-button:hover {
+    color: #e63946;
+    transform: scale(1.2);
+}
+
+.like-count {
+    font-weight: 600;
+    margin: 6px 0 14px;
+}
+
+.post-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.post-description {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.55;
+}
+
+.post-timestamp {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .post {
+        width: 94%;
+        border-radius: 14px;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+    }
+}
