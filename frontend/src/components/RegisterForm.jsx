@@ -1,6 +1,7 @@
 import Input from "./Input.jsx";
 import "../css/RegisterForm.css";
 import { useAuth } from "../contexts/AuthContext.jsx";
+import { useNavigate } from 'react-router-dom';
 
 const fields = [
     { name: "username", type: "text", placeholder: "Username" },
@@ -10,9 +11,23 @@ const fields = [
 
 function RegisterForm() {
     const { formData, handleChange, handleSubmit, loading, user, error } = useAuth();
+    const navigate = useNavigate();
+
+    const onSubmit = async (e) => {
+        try {
+            const newUser = await handleSubmit(e);
+            if (newUser) {
+                setTimeout(() => {
+                    navigate('/');
+                }, 1000);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
             <h2>Register</h2>
 
             {fields.map((field) => (
