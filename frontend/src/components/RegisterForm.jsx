@@ -1,5 +1,6 @@
 import Input from "./Input.jsx";
 import "../css/RegisterForm.css";
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { useNavigate } from 'react-router-dom';
 
@@ -11,11 +12,13 @@ const fields = [
 
 function RegisterForm() {
     const { formData, handleChange, handleSubmit, loading, user, error } = useAuth();
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
     const onSubmit = async (e) => {
         try {
             const newUser = await handleSubmit(e);
+            setSuccess(true);
             if (newUser) {
                 setTimeout(() => {
                     navigate('/');
@@ -44,7 +47,7 @@ function RegisterForm() {
 
             {error?.general && <p className="error">{error.general}</p>}
 
-            {user && <p className="success">Successfully registered!</p>}
+            {success && <p className="success">Successfully registered!</p>}
 
             <button type="submit" disabled={loading}>
                 {loading ? "Registering..." : "Register"}
