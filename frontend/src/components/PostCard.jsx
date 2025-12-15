@@ -12,10 +12,10 @@ function PostCard({ post }) {
             <img src={post.post_image_url} alt="Post Image" />
         </div>
         <div className="post-content">
-            <button className="like-button">
-                ❤
-            </button>
-            <p className="like-count">{post.likes} likes</p>
+            <div className="post-actions">
+                <button className="like-button">❤</button>
+                <p className="like-count">{post.likes} likes</p>
+            </div>
             <h2 className="post-title">{post.title}</h2>
             <p className="post-description">{post.description}</p>
             <p className="post-timestamp">{new Date(post.created_at).toLocaleString()}</p>
