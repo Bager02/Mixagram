@@ -18,8 +18,8 @@ function RegisterForm() {
     const onSubmit = async (e) => {
         try {
             const newUser = await handleSubmit(e);
-            setSuccess(true);
             if (newUser) {
+                setSuccess(true);
                 setTimeout(() => {
                     navigate('/');
                 }, 1000);
