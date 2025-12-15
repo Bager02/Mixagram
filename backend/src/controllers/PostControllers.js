@@ -43,7 +43,7 @@ export const createPost = async (req, res) => {
             description,
             post_image_url: imagePath,
             user: {
-                connect: { id: parseInt(user_id) } // connect to existing user with id=1
+                connect: { id: parseInt(1) } // connect to existing user with id=1
             }
         };
 

@@ -9,8 +9,8 @@ app.use(express.json());
 
 app.use('/uploads', express.static('uploads'));
 
-app.use('/', postRoutes);  
-app.use('/register', authRoutes);
+app.use('/posts', postRoutes);  
+app.use('/auth', authRoutes);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
