@@ -1,13 +1,13 @@
 import Input from "./Input.jsx";
 import { useState } from "react";
-import { useAuth,  } from "../contexts/AuthContext.jsx";
+import { useAuth } from "../contexts/AuthContext.jsx";
 
 const fields = [
     { name: "username", type: "text", placeholder: "Username" },
     { name: "password", type: "password", placeholder: "Password" },
 ];
 
-function LoginForm() {
+function LoginForm({ onSuccess }) {
     const { loginFormData, handleChangeLogin, handleSubmitLogin, loading, error } = useAuth();
     const [success, setSuccess] = useState(false);
 
@@ -17,7 +17,7 @@ function LoginForm() {
 
             if (loggedInUser) 
                 setSuccess(true);
-
+                onSuccess?.(); 
         } catch (err) {
             console.error(err);
         }

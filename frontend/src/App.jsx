@@ -1,40 +1,36 @@
-import { useState } from 'react'
-import NavBar from './components/NavBar.jsx'
+import { Routes, Route } from 'react-router-dom'
+import { useAuth } from "./contexts/AuthContext";
 import HomePage from './pages/HomePage.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
 import UploadPage from './pages/UploadPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import { useAuth } from "./contexts/AuthContext";
+import NotFoundPage from './pages/NotFoundPage.jsx'
 import './css/App.css'
-
+import ProtectedLayout from './layouts/ProtectedLayout.jsx';
+import PublicLayout from './layouts/PublicLayout.jsx';
 
 function App() {
-    const { user, loading } = useAuth();
-    const location = useLocation();
-    const hideNavBarRoutes = ["/register", "/login"];
-    const shouldShowNavBar = !hideNavBarRoutes.includes(location.pathname);
+    const { loading } = useAuth();
 
     //if (loadingAuth) return <div>Loading...</div>;
 
     return (
         <>
-            {shouldShowNavBar && <NavBar />}
-
             <main className="main-content">
-                <Routes>
-                    <Route path='/register' element={<RegisterPage />} />
-                    <Route
-                        path="/"
-                        element={user ? <HomePage /> : <Navigate to="/login" />}
-                    />
-                    <Route
-                        path="/login"
-                        element={user ? <Navigate to="/" /> : <LoginPage />}
-                    />
-                    <Route path='/user-profile' element={<ProfilePage />} />
-                    <Route path='/upload' element={<UploadPage />} />
+                <Routes> 
+                    <Route element={<PublicLayout />}>
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                    </Route>
+
+                    <Route element={<ProtectedLayout />}>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/user-profile" element={<ProfilePage />} />
+                        <Route path="/upload" element={<UploadPage />} />
+                    </Route>
+
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </main>
         </>
