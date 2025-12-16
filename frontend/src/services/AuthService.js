@@ -23,12 +23,12 @@ export async function registerUser(data) {
 
 export async function loginUser(data) {
     const res = await fetch(`${API_URL}/auth/login`, {
-        method: "POST",                       
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        credentials: "include",               
-        body: JSON.stringify(data),           
+        credentials: "include",
+        body: JSON.stringify(data),
     });
 
     const result = await res.json();
@@ -37,13 +37,19 @@ export async function loginUser(data) {
         throw new Error(result.error || "Login failed");
     }
 
-    return result; 
+    return result;
 }
 
 export async function getCurrentUser() {
     const res = await fetch(`${API_URL}/auth/me`, {
-        credentials: "include", 
+        credentials: "include",
+        cache: "no-store",
     });
+
     if (!res.ok) return null;
+    if (res.status === 401) {
+        return null;
+    }
+
     return await res.json();
 }

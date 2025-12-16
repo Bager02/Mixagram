@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Outlet } from 'react-router-dom'
 import { useAuth } from "./contexts/AuthContext";
+import { PostProvider } from './contexts/PostContext.jsx';
 import HomePage from './pages/HomePage.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
 import UploadPage from './pages/UploadPage.jsx'
@@ -13,21 +14,27 @@ import PublicLayout from './layouts/PublicLayout.jsx';
 function App() {
     const { loading } = useAuth();
 
-    //if (loadingAuth) return <div>Loading...</div>;
-
     return (
         <>
             <main className="main-content">
-                <Routes> 
+                <Routes>
                     <Route element={<PublicLayout />}>
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
                     </Route>
 
                     <Route element={<ProtectedLayout />}>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/user-profile" element={<ProfilePage />} />
-                        <Route path="/upload" element={<UploadPage />} />
+                        <Route
+                            element={
+                                <PostProvider>
+                                    <Outlet />
+                                </PostProvider>
+                            }
+                        >
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/user-profile" element={<ProfilePage />} />
+                            <Route path="/upload" element={<UploadPage />} />
+                        </Route>
                     </Route>
 
                     <Route path="*" element={<NotFoundPage />} />

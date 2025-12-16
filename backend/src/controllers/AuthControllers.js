@@ -63,8 +63,13 @@ export const login = async (req, res) => {
 };
 
 export const me = async (req, res) => {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    
     try {
         if (!req.session.userId) {
+            res.clearCookie("connect.sid");
             return res.status(401).json({ error: "Not logged in" });
         }
 

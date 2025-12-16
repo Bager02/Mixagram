@@ -1,18 +1,23 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import NavBar from "../components/NavBar";
 
 const ProtectedLayout = () => {
-  const { user } = useAuth();
+    const { user, loadingAuth } = useAuth();
+    const location = useLocation();
 
-  return user ? (
-    <>
-      <NavBar />
-      <Outlet />
-    </>
-  ) : (
-    <Navigate to="/login" />
-  );
+    if (loadingAuth) return null;
+
+    if (!user) {
+        return <Navigate to="/login" replace state={{ from: location }} />;
+    }
+
+    return (
+        <>
+            <NavBar />
+            <Outlet />
+        </>
+    );
 };
 
 export default ProtectedLayout;

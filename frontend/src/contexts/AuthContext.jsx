@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { registerUser, loginUser, getCurrentUser } from "../services/AuthService";
+import { useLocation } from "react-router-dom";
 
 const AuthContext = createContext(null);
 
@@ -16,22 +17,31 @@ export function AuthProvider({ children }) {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
-    //const [loadingAuth, setLoadingAuth] = useState(true);
+    const [loadingAuth, setLoadingAuth] = useState(true);
     const [error, setError] = useState({});
+    const location = useLocation();
+    const publicRoutes = ["/login", "/register"];
 
     useEffect(() => {
         const fetchUser = async () => {
+            setLoadingAuth(true);
+
             try {
                 const currentUser = await getCurrentUser();
-                if (currentUser) setUser(currentUser);
-            } catch (err) {
-                console.error(err);
-            } //finally {
-                //setLoadingAuth(false); 
-            //}
+                setUser(currentUser); 
+            } catch {
+                setUser(null);
+            } finally {
+                setLoadingAuth(false);
+            }
         };
-        fetchUser();
-    }, []);
+
+        if (!publicRoutes.includes(location.pathname)) {
+            fetchUser();
+        } else {
+            setLoadingAuth(false);
+        }
+    }, [location.pathname]);
 
     const handleChangeRegister = (e) => {
         const { name, value } = e.target;
@@ -108,7 +118,7 @@ export function AuthProvider({ children }) {
                 handleChangeLogin,
                 user,
                 loading,
-                //loadingAuth,
+                loadingAuth,
                 error,
             }}
         >
