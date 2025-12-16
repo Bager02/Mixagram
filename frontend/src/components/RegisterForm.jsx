@@ -1,5 +1,5 @@
 import Input from "./Input.jsx";
-import "../css/RegisterForm.css";
+import "../css/RegisterLoginForm.css";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { useNavigate } from 'react-router-dom';
