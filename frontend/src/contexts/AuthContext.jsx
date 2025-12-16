@@ -1,39 +1,65 @@
-import { createContext, useContext, useState } from "react";
-import { registerUser } from "../services/AuthService";
+import { createContext, useContext, useState, useEffect } from "react";
+import { registerUser, loginUser, getCurrentUser } from "../services/AuthService";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-    const [formData, setFormData] = useState({
+    const [registerFormData, setRegisterFormData] = useState({
         username: "",
         email: "",
         password: "",
     });
+    const [loginFormData, setLoginFormData] = useState({
+        username: "",
+        password: "",
+    });
+
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
+    //const [loadingAuth, setLoadingAuth] = useState(true);
     const [error, setError] = useState({});
 
-    const handleChange = (e) => {
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+                if (currentUser) setUser(currentUser);
+            } catch (err) {
+                console.error(err);
+            } //finally {
+                //setLoadingAuth(false); 
+            //}
+        };
+        fetchUser();
+    }, []);
+
+    const handleChangeRegister = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setRegisterFormData(prev => ({ ...prev, [name]: value }));
         setError((prev) => ({ ...prev, [name]: "" }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleChangeLogin = (e) => {
+        const { name, value } = e.target;
+        setLoginFormData(prev => ({ ...prev, [name]: value }));
+        setError(prev => ({ ...prev, [name]: "" }));
+    };
+
+    const handleSubmitRegister = async (e) => {
         e.preventDefault();
         setError({});
 
-        if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        if (!/\S+@\S+\.\S+/.test(registerFormData.email)) {
             setError({ email: "Please enter a valid email (e.g., example@gmail.com)" });
             return;
-        }
+        };
 
         setLoading(true);
 
         try {
-            const newUser = await registerUser(formData);
+            const newUser = await registerUser(registerFormData);
             setUser(newUser);
-            setFormData({ username: "", email: "", password: "" });
+            setRegisterFormData({ username: "", email: "", password: "" });
             return newUser;
         } catch (err) {
             const fieldErrors = {};
@@ -42,6 +68,8 @@ export function AuthProvider({ children }) {
             else if (err.message.includes("Password")) fieldErrors.password = err.message;
             else fieldErrors.general = err.message;
 
+            //and from the backend authController the error var is processed to determine which error occured
+
             setError(fieldErrors);
             throw err;
         } finally {
@@ -49,14 +77,38 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const handleSubmitLogin = async (e) => {
+        e.preventDefault();
+        setError({});
+        setLoading(true);
+
+        try {
+            const loggedUser = await loginUser(loginFormData);
+            setUser(loggedUser);
+            setLoginFormData({ username: "", password: "" });
+        } catch (err) {
+            if (err.message.includes("Incorrect password") || err.message.includes("User not found")) {
+                setError({ general: "Username or password is incorrect" });
+            } else {
+                setError({ general: err.message });
+            }
+            //not as many errors for login as only possible error is invalid credetials NEEDS TO CHANGE        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <AuthContext.Provider
             value={{
-                formData,
-                handleChange,
-                handleSubmit,
+                loginFormData,
+                registerFormData,
+                handleChangeRegister,
+                handleSubmitRegister,
+                handleSubmitLogin,
+                handleChangeLogin,
                 user,
                 loading,
+                //loadingAuth,
                 error,
             }}
         >

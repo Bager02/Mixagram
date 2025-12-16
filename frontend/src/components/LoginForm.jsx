@@ -1,29 +1,24 @@
 import Input from "./Input.jsx";
-import "../css/RegisterForm.css";
+import "../css/LoginForm.css";
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext.jsx";
-import { useNavigate } from 'react-router-dom';
+import { useAuth,  } from "../contexts/AuthContext.jsx";
 
 const fields = [
     { name: "username", type: "text", placeholder: "Username" },
-    { name: "email", type: "email", placeholder: "Email" },
     { name: "password", type: "password", placeholder: "Password" },
 ];
 
-function RegisterForm() {
-    const { registerFormData, handleChangeRegister, handleSubmitRegister, loading, error } = useAuth();
+function LoginForm() {
+    const { loginFormData, handleChangeLogin, handleSubmitLogin, loading, error } = useAuth();
     const [success, setSuccess] = useState(false);
-    const navigate = useNavigate();
 
     const onSubmit = async (e) => {
         try {
-            const newUser = await handleSubmitRegister(e);
-            if (newUser) {
+            const loggedInUser = await handleSubmitLogin(e);
+
+            if (loggedInUser) 
                 setSuccess(true);
-                setTimeout(() => {
-                    navigate('/');
-                }, 1000);
-            }
+
         } catch (err) {
             console.error(err);
         }
@@ -31,15 +26,15 @@ function RegisterForm() {
 
     return (
         <form onSubmit={onSubmit}>
-            <h2>Register</h2>
+            <h2>Login</h2>
 
             {fields.map((field) => (
                 <div key={field.name} className="form-group">
                     <Input
                         key={field.name}
                         {...field}
-                        value={registerFormData?.[field.name] || ""}
-                        onChange={handleChangeRegister}
+                        value={loginFormData?.[field.name] || ""}
+                        onChange={handleChangeLogin}
                     />
                     {error?.[field.name] && <p className="error">{error[field.name]}</p>}
                 </div>
@@ -47,13 +42,13 @@ function RegisterForm() {
 
             {error?.general && <p className="error">{error.general}</p>}
 
-            {success && <p className="success">Successfully registered!</p>}
+            {success && <p className="success">Successfully logged in!</p>}
 
             <button type="submit" disabled={loading}>
-                {loading ? "Registering..." : "Register"}
+                {loading ? "Logging in..." : "Login"}
             </button>
         </form>
     );
 }
 
-export default RegisterForm;
+export default LoginForm;

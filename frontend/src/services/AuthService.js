@@ -20,3 +20,30 @@ export async function registerUser(data) {
 
     return result;
 }
+
+export async function loginUser(data) {
+    const res = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",                       
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",               
+        body: JSON.stringify(data),           
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+        throw new Error(result.error || "Login failed");
+    }
+
+    return result; 
+}
+
+export async function getCurrentUser() {
+    const res = await fetch(`${API_URL}/auth/me`, {
+        credentials: "include", 
+    });
+    if (!res.ok) return null;
+    return await res.json();
+}

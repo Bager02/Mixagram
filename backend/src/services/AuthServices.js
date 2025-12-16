@@ -24,6 +24,8 @@ export const createUserService = async (data) => {
         }
     }
 
+    //Error handling for registration starts from the prisma errors and then are sent to the controller NEEDS TO CHANGE
+
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     return prisma.user.create({
@@ -62,3 +64,17 @@ export const loginService = async (data) => {
         email: existingUser.email,
     };
 }
+
+export const getUserById = async (id) => {
+    const user = await prisma.user.findUnique({
+        where: { id: Number(id) }, 
+        select: {
+            id: true,
+            username: true,
+            email: true,
+
+        },
+    });
+
+    return user; 
+};

@@ -1,4 +1,4 @@
-import { createUserService, loginService } from "../services/AuthServices.js";
+import { createUserService, loginService, getUserById } from "../services/AuthServices.js";
 
 export const register = async (req, res) => {
     try {
@@ -22,6 +22,9 @@ export const register = async (req, res) => {
             return res.status(400).json({ error: err.message });
         }
 
+        //Here, if they appear are stored in error var, and now if an error happens 
+        // this var is sent to frontend NEEDS TO CHANGE
+
         res.status(500).json({ error: "Failed to create user" });
     }
 };
@@ -37,7 +40,8 @@ export const logout = async (req, res) => {
         }
     })
 
-    res.clearCookie("connect.sid", { path: "/" }); // connect.sid is the name of session cookie, and { path: "/" } is the default path where the cookie was created. this is so the right cookie gets deleted.
+    res.clearCookie("connect.sid", { path: "/" }); // connect.sid is the name of session cookie, 
+    // and { path: "/" } is the default path where the cookie was created. this is so the right cookie gets deleted.
     res.status(200).json({ message: "Logged out successfully" });
 };
 
@@ -57,3 +61,23 @@ export const login = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+export const me = async (req, res) => {
+    try {
+        if (!req.session.userId) {
+            return res.status(401).json({ error: "Not logged in" });
+        }
+
+        const user = await getUserById(req.session.userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        //the "if" above checks if the id in the session is tied to an existing user. imagine they delete the 
+        //account and SOMEHOW the session doesnt end (error case), you need something to see what happened.
+        return res.json(user);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
