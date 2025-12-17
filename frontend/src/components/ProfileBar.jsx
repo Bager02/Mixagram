@@ -10,8 +10,7 @@ function ProfileBar() {
                 <div className="profile-left">
                     <img
                         className="profile-avatar"
-                        src="https://i.imgur.com/6vmfl1j.jpeg"
-                        alt="Profile"
+                        src={user?.profileImage || 'https://i.imgur.com/OjqOzDB.png'}
                     />
                     <div className="profile-text">
                         <h2 className="profile-name">{user?.username}</h2>

@@ -72,6 +72,7 @@ export const getUserById = async (id) => {
       id: true,
       username: true,
       email: true,
+      profile_image: true,
       _count: {
         select: { posts: true }
       }
@@ -84,6 +85,7 @@ export const getUserById = async (id) => {
     id: user.id,
     username: user.username,
     email: user.email,
+    profileImage: user.profile_image,
     postCount: user._count?.posts ?? 0
   };
 };

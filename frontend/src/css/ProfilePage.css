@@ -15,6 +15,8 @@
     transition: all 0.25s ease;
     cursor: pointer;
     font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
 .profile-post-card:hover {
@@ -24,7 +26,7 @@
 
 .profile-post-card .post-image {
     width: 100%;
-    height: 280px;
+    height: 300px; 
     overflow: hidden;
     background: #79b083;
 }
@@ -43,6 +45,10 @@
 .profile-post-card .post-info {
     padding: 16px;
     background: linear-gradient(180deg, #ecfff2, #f2fff5);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .profile-post-card .post-title {
@@ -54,7 +60,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 
@@ -65,9 +70,7 @@
     margin: 0 0 10px 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    display: -webkit-box;    -webkit-box-orient: vertical;
 }
 
 .profile-post-card .post-likes {
@@ -80,6 +83,7 @@
     gap: 4px;
 }
 
+/* Responsive adjustments */
 @media (max-width: 900px) {
     .profile-posts-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -87,7 +91,7 @@
     }
 
     .profile-post-card .post-image {
-        height: 260px;
+        height: 320px;
     }
 }
 
@@ -99,6 +103,6 @@
     }
 
     .profile-post-card .post-image {
-        height: 280px;
+        height: 300px;
     }
 }
