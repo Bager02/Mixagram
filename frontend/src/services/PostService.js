@@ -17,3 +17,16 @@ export async function uploadPost(data) {
 
     return res.json();
 }
+
+export async function fetchPostsFromUser() {
+    const res = await fetch(`${API_URL}/posts/user-posts`, {
+        credentials: 'include',
+        cache: 'no-store'
+    });
+
+    if (!res.ok) {
+        throw new Error('Failed to fetch user posts');
+    }
+
+    return await res.json();
+}

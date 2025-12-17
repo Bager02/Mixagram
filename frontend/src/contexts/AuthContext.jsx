@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { registerUser, loginUser, getCurrentUser, logoutUser } from "../services/AuthService";
+import { fetchPostsFromUser } from "../services/PostService";
 import { useLocation } from "react-router-dom";
 
 const AuthContext = createContext(null);
@@ -19,6 +20,7 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(false);
     const [loadingAuth, setLoadingAuth] = useState(true);
     const [error, setError] = useState({});
+    const [userPosts, setUserPosts] = useState([]);
     const location = useLocation();
     const publicRoutes = ["/login", "/register"];
 
@@ -28,9 +30,18 @@ export function AuthProvider({ children }) {
 
             try {
                 const currentUser = await getCurrentUser();
-                setUser(currentUser); 
+                setUser(currentUser);
+
+                if (currentUser) {
+                    const posts = await fetchPostsFromUser();
+                    setUserPosts(posts);
+                } else {
+                    setUserPosts([]);
+                }
+
             } catch {
                 setUser(null);
+                setUserPosts([]);
             } finally {
                 setLoadingAuth(false);
             }
@@ -108,14 +119,14 @@ export function AuthProvider({ children }) {
     };
 
     const handleLogout = async () => {
-    try {
-        await logoutUser();
-    } catch (err) {
-        console.error(err);
-    } finally {
-        setUser(null);
-    }
-};
+        try {
+            await logoutUser();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setUser(null);
+        }
+    };
 
     return (
         <AuthContext.Provider
@@ -127,6 +138,7 @@ export function AuthProvider({ children }) {
                 handleSubmitLogin,
                 handleChangeLogin,
                 handleLogout,
+                userPosts,
                 user,
                 loading,
                 loadingAuth,

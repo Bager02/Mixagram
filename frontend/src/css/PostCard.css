@@ -3,16 +3,15 @@
     margin: 24px auto;
     border-radius: 16px;
     overflow: hidden;
-    background: #f2fff5;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: #ecfff2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
     font-family: "Poppins", sans-serif;
 }
 
 .post:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
 }
 
 .post-user-info {
@@ -20,7 +19,7 @@
     align-items: center;
     gap: 12px;
     padding: 14px 18px;
-    background: #e8fbe9;
+    background: linear-gradient(135deg, #79b083, #52975f);
 }
 
 .user-avatar {
@@ -28,84 +27,87 @@
     height: 44px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #b7e2c1;
+    border: 2px solid #ecfff2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .user-name {
     font-weight: 600;
     font-size: 15px;
-    color: #245b36;
+    color: #ecfff2;
 }
 
 .post-image img {
     width: 100%;
     display: block;
+    background: #79b083;
 }
 
 .post-content {
     padding: 16px 18px 18px;
-    text-align: left; 
+    text-align: left;
+    background: linear-gradient(180deg, #ecfff2, #f2fff5);
 }
 
 .post-actions {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-start;
     align-items: center;
+    gap: 8px;
 }
 
 .like-button {
-    all: unset;                
-    display: inline-flex; 
+    all: unset;
+    display: inline-flex;
     border: none;
     background: none;
-    font-size: 26px; 
+    font-size: 24px;
     cursor: pointer;
-    color: #7b9181;
-    transition: transform 0.12s ease, color 0.12s ease;
-    margin-right: 4px;
-    margin-left: -8px;
-    padding: 6px 8px;          
-    border-radius: 25%;
-    text-align: center;
+    color: #52975f;
+    transition: all 0.2s ease;
+    padding: 6px 8px;
+    border-radius: 8px;
 }
 
 .like-button:hover {
-    color: #e63946;
-    transform: scale(1.05); 
+    color: #386547;
+    background: rgba(82, 151, 95, 0.1);
+    transform: scale(1.1);
 }
 
 .like-count {
     font-weight: 600;
     font-size: 17px;
-    margin: 6px 0 12px;
-    color: #2f5f3f;
-    margin-right: auto;
+    margin: 0;
+    color: #386547;
 }
 
 .post-title {
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 6px;
-    margin-top: 6px;
-    color: #1f3d2b;
-    text-align: left; 
+    margin: 0 0 8px 0;
+    color: #386547;
+    text-align: left;
+    line-height: 1.4;
 }
 
 .post-description {
     font-size: 14px;
-    color: #3a4f42;
+    color: #52975f;
     line-height: 1.6;
+    margin: 0 0 12px 0;
 }
 
 .post-timestamp {
     font-size: 12px;
-    color: #7a8f83;
-    margin-top: 10px;
+    color: #79b083;
+    margin: 8px 0 0 0;
 }
 
 @media (max-width: 600px) {
     .post {
         width: 95%;
+        margin: 16px auto;
     }
 
     .user-avatar {
@@ -115,5 +117,9 @@
 
     .post-title {
         font-size: 16px;
+    }
+
+    .post-description {
+        font-size: 13px;
     }
 }
