@@ -12,7 +12,6 @@ import ProtectedLayout from './layouts/ProtectedLayout.jsx';
 import PublicLayout from './layouts/PublicLayout.jsx';
 
 function App() {
-    const { loading } = useAuth();
 
     return (
         <>
