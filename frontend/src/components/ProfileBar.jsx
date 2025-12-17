@@ -16,7 +16,7 @@ function ProfileBar() {
                     <div className="profile-text">
                         <h2 className="profile-name">{user?.username}</h2>
                         <div className="profile-stats">
-                            <span>12</span> posts
+                            <span>{user?.postCount ?? 0}</span> posts
                         </div>
                     </div>
                 </div>

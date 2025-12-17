@@ -66,15 +66,24 @@ export const loginService = async (data) => {
 }
 
 export const getUserById = async (id) => {
-    const user = await prisma.user.findUnique({
-        where: { id: Number(id) }, 
-        select: {
-            id: true,
-            username: true,
-            email: true,
+  const user = await prisma.user.findUnique({
+    where: { id: Number(id) },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      _count: {
+        select: { posts: true }
+      }
+    },
+  });
 
-        },
-    });
+  if (!user) return null;
 
-    return user; 
+  return {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    postCount: user._count?.posts ?? 0
+  };
 };
