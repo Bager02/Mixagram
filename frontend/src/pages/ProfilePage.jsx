@@ -6,16 +6,18 @@ import '../css/ProfilePage.css'
 function ProfilePage() {
     const { userPosts } = useAuth();
 
-    if (!userPosts.length) return <p>No posts yet.</p>;
-
     return (
         <>
             <ProfileBar />
-            <div className="profile-posts-grid">
-                {userPosts.map(post => (
-                    <ProfilePostCard key={post.id} post={post} />
-                ))}
-            </div>
+            {userPosts.length > 0 ? (
+                <div className="profile-posts-grid">
+                    {userPosts.map(post => (
+                        <ProfilePostCard key={post.id} post={post} />
+                    ))}
+                </div>
+            ) : (
+                <p className="no-posts-message">No posts yet</p>
+            )}
         </>
     );
 }

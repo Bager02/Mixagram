@@ -83,6 +83,16 @@
     gap: 4px;
 }
 
+.no-posts-message {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #5b6f63;
+    margin: 32px 24px; /* spacing from profile bar and page edges */
+    text-align: left;
+    align-self: center;
+}
+
 /* Responsive adjustments */
 @media (max-width: 900px) {
     .profile-posts-grid {
