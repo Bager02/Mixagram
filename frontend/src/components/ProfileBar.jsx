@@ -11,12 +11,14 @@ function ProfileBar() {
                     <img
                         className="profile-avatar"
                         src={user?.profileImage || 'https://i.imgur.com/OjqOzDB.png'}
+                        alt="Profile"
                     />
                     <div className="profile-text">
                         <h2 className="profile-name">{user?.username}</h2>
                         <div className="profile-stats">
                             <span>{user?.postCount ?? 0}</span> posts
                         </div>
+                        <p className="profile-bio">{user.bio}</p>
                     </div>
                 </div>
                 <button className="logout-button" onClick={handleLogout}>

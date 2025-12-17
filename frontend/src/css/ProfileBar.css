@@ -26,6 +26,7 @@
     object-fit: cover;
     border: 2px solid #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    margin-bottom: auto;
 }
 
 .profile-text {
@@ -39,6 +40,7 @@
     font-weight: 600;
     color: #1f2d23;
     margin: 0;
+    text-align: left;
 }
 
 .profile-stats {
@@ -49,6 +51,14 @@
 .profile-stats span {
     font-weight: 600;
     color: #2f5d46;
+}
+
+.profile-bio {
+    font-size: 13px;
+    color: #386547;
+    margin: 4px 0 0 0;
+    line-height: 1.4;
+    word-break: break-word;
 }
 
 .logout-button {
@@ -63,6 +73,7 @@
     white-space: nowrap;
     transition: background 0.2s ease, transform 0.15s ease;
     max-width: 100px;
+    margin-bottom: auto;
 }
 
 .logout-button:hover {
