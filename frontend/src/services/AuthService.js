@@ -40,6 +40,21 @@ export async function loginUser(data) {
     return result;
 }
 
+export async function logoutUser() {
+    const res = await fetch(`${API_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+        cache: "no-store",
+    });
+
+    if (!res.ok) {
+        const result = await res.json().catch(() => ({}));
+        throw new Error(result.error || "Logout failed");
+    }
+
+    return true;
+}
+
 export async function getCurrentUser() {
     const res = await fetch(`${API_URL}/auth/me`, {
         credentials: "include",

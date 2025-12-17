@@ -1,72 +1,104 @@
 .profile-bar {
     width: 500px;
-    margin: 22px auto;
-    padding: 16px;
+    margin: 24px auto 14px;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(180deg, #ecfff2, #dff7e6);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    font-family: "Poppins", sans-serif;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-left {
     display: flex;
     align-items: center;
-    gap: 16px;
-
-    background-color: #e4ffe9;
-    border: 1px solid #b8b8b8;
-    border-radius: 18px;
-    box-shadow: 0 10px 10px rgba(0,0,0,0.06);
-
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
-    font-family: "Poppins", sans-serif;
+    gap: 14px;
 }
 
 .profile-avatar {
-    width: 68px;
-    height: 68px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #e6e6e6;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
-.profile-info {
+.profile-text {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .profile-name {
     font-size: 20px;
     font-weight: 600;
-    color: #222;
+    color: #1f2d23;
+    margin: 0;
 }
 
 .profile-stats {
-    font-size: 16px;
-    color: #444;
-    margin-top: 2px;
-    margin-left: 50px;
+    font-size: 14px;
+    color: #5b6f63;
 }
 
 .profile-stats span {
     font-weight: 600;
+    color: #2f5d46;
+}
+
+.logout-button {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: none;
+    background: #ff6b6b;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.15s ease;
+    max-width: 100px;
+}
+
+.logout-button:hover {
+    background: #ff5252;
+    transform: translateY(-1px);
+}
+
+.logout-button:active {
+    transform: translateY(0);
 }
 
 .profile-divider {
-    width: 500px;            
-    height: 2px;              
-    background-color: #b8b8b8; 
-    margin: 10px auto 20px;   
-    border-radius: 1px;       
+    width: 500px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #b8b8b8, transparent);
+    margin: 10px auto 24px;
+    border-radius: 1px;
 }
 
-@media (max-width: 600px) {
+@media(max-width:600px) {
     .profile-bar {
         width: 94%;
-        border-radius: 14px;
-        padding: 14px;
+        padding: 14px 16px;
+        border-radius: 16px;
     }
 
     .profile-avatar {
-        width: 54px;
-        height: 54px;
+        width: 52px;
+        height: 52px;
     }
 
     .profile-name {
         font-size: 18px;
+    }
+
+    .logout-button {
+        padding: 6px 12px;
+        font-size: 13px;
     }
 }

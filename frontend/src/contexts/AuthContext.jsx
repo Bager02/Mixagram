@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { registerUser, loginUser, getCurrentUser } from "../services/AuthService";
+import { registerUser, loginUser, getCurrentUser, logoutUser } from "../services/AuthService";
 import { useLocation } from "react-router-dom";
 
 const AuthContext = createContext(null);
@@ -107,6 +107,16 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const handleLogout = async () => {
+    try {
+        await logoutUser();
+    } catch (err) {
+        console.error(err);
+    } finally {
+        setUser(null);
+    }
+};
+
     return (
         <AuthContext.Provider
             value={{
@@ -116,6 +126,7 @@ export function AuthProvider({ children }) {
                 handleSubmitRegister,
                 handleSubmitLogin,
                 handleChangeLogin,
+                handleLogout,
                 user,
                 loading,
                 loadingAuth,
