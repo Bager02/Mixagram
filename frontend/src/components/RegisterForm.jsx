@@ -1,8 +1,8 @@
 import Input from "./Input.jsx";
 import "../css/RegisterLoginForm.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const fields = [
     { name: "username", type: "text", placeholder: "Username" },
@@ -11,9 +11,13 @@ const fields = [
 ];
 
 function RegisterForm() {
-    const { registerFormData, handleChangeRegister, handleSubmitRegister, loading, error } = useAuth();
+    const { registerFormData, handleChangeRegister, handleSubmitRegister, clearAuthError, loading, error } = useAuth();
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        clearAuthError();
+    }, []);
 
     const onSubmit = async (e) => {
         try {
@@ -52,6 +56,12 @@ function RegisterForm() {
             <button type="submit" disabled={loading}>
                 {loading ? "Registering..." : "Register"}
             </button>
+            <div className="auth-redirect">
+                <span>Already have an account?</span>
+                <Link to="/login" className="auth-link">
+                    Log in
+                </Link>
+            </div>
         </form>
     );
 }

@@ -24,6 +24,10 @@ export function AuthProvider({ children }) {
     const location = useLocation();
     const publicRoutes = ["/login", "/register"];
 
+    const clearAuthError = () => {
+        setError(null);
+    };
+
     useEffect(() => {
         const fetchUser = async () => {
             setLoadingAuth(true);
@@ -138,6 +142,7 @@ export function AuthProvider({ children }) {
                 handleSubmitLogin,
                 handleChangeLogin,
                 handleLogout,
+                clearAuthError,
                 userPosts,
                 user,
                 loading,

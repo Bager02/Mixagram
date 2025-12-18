@@ -79,3 +79,21 @@ button:hover {
     box-sizing: border-box;
     text-align: center
 }
+
+.auth-redirect {
+    margin-top: 14px;
+    font-size: 14px;
+    text-align: center;
+    color: #5b6f63;
+}
+
+.auth-link {
+    margin-left: 6px;
+    color: #2f5d46;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
