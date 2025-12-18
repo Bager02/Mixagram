@@ -6,16 +6,26 @@ export async function fetchPosts() {
     const res = await fetch(`${API_URL}/posts`,{
         credentials: "include",
     });
-    return res.json();
+    
+    if (!res.ok) {
+        throw new Error('Failed to fetch posts');
+    }
+
+    return await res.json();
 }
 
-export async function uploadPost(data) {
+export async function uploadPost(formData) {
     const res = await fetch(`${API_URL}/posts/new-post`, {
         method: "POST",
         body: formData,
+        credentials: "include",
     });
 
-    return res.json();
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error || "Failed to upload post");
+
+    return data;
 }
 
 export async function fetchPostsFromUser() {

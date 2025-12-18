@@ -7,6 +7,6 @@ const router = Router();
 
 router.get("/", requireAuth, fetchPosts);
 router.get("/user-posts", requireAuth, fetchPostsFromUser);
-router.post("/new-post", upload.single('post_image'), requireAuth, createPost);
+router.post("/new-post", upload.single('file'), requireAuth, createPost);
 
 export default router;

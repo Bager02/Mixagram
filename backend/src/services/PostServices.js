@@ -38,9 +38,21 @@ export const fetchPostsFromUserService = async (userId) => {
     }
 };
 
-export const createPostService = async (data) => {
-    return prisma.post.create({
-        data,
-    });
-}
+export const createPostService = async (userId, file, body) => {
+    if (!file) throw new Error("Image is required");
 
+    const { title, description } = body;
+
+    const postData = {
+        title,
+        description,
+        post_image_url: `/uploads/posts/${file.filename}`,
+        user: {
+            connect: { id: userId }
+        }
+    };
+
+    return prisma.post.create({
+        data: postData
+    });
+};

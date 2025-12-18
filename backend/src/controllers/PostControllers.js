@@ -47,28 +47,10 @@ export const fetchPostsFromUser = async (req, res) => {
 
 export const createPost = async (req, res) => {
     try {
-        const { title, description, user_id } = req.body;
-
-        if (!req.file) {
-            return res.status(400).json({ error: 'Image is required' });
-        }
-
-        const imagePath = `/uploads/posts/${req.file.filename}`;
-
-        const postData = {
-            title,
-            description,
-            post_image_url: imagePath,
-            user: {
-                connect: { id: req.session.userId } 
-            }
-        };
-
-        const post = await createPostService(postData);
-
+        const post = await createPostService(req.session.userId, req.file, req.body);
         res.status(201).json(post);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Failed to create post' });
+        res.status(400).json({ error: err.message || 'Failed to create post' });
     }
 };
