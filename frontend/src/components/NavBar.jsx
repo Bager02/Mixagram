@@ -3,15 +3,46 @@ import '../css/NavBar.css';
 
 function NavBar() {
     return (
-        <div className="navbar-links">
-            <div className="upload-post">
-                <Link to="/upload">+</Link>
+        <div className="sidebar">
+            <div className="sidebar-header">
+                <Link to="/" className="app-name">Mixagram</Link>
             </div>
-            <div className="home-link">
-                <Link to="/" className="nav-link">Mixagram</Link>
-            </div>
-            <div className="user-profile-link">
-                <Link to="/user-profile" className="nav-link">Profile</Link>
+
+            <nav className="sidebar-nav">
+                <div className="nav-item">
+                    <Link to="/user-profile">
+                        <span className="nav-icon">👤</span>
+                        Profile
+                    </Link>
+                </div>
+
+                <div className="nav-item">
+                    <Link to="/upload">
+                        <span className="nav-icon">📤</span>
+                        Upload
+                    </Link>
+                </div>
+
+                <div className="nav-item">
+                    <button>
+                        <span className="nav-icon">💬</span>
+                        Chat
+                    </button>
+                </div>
+
+                <div className="nav-item">
+                    <button>
+                        <span className="nav-icon">❤️</span>
+                        Liked
+                    </button>
+                </div>
+            </nav>
+
+            <div className="sidebar-footer">
+                <button>
+                    <span className="nav-icon">📧</span>
+                    Contact
+                </button>
             </div>
         </div>
     );
