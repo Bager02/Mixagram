@@ -1,9 +1,12 @@
 import UploadImg from '../components/UploadImg.jsx'
+import '../css/MainLayout.css';
 
 function UploadPage() {
     return (
-        <UploadImg />
+        <div className="main-content">
+            <UploadImg />
+        </div>
     );
-} 
+}
 
 export default UploadPage;

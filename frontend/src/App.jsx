@@ -15,7 +15,7 @@ function App() {
 
     return (
         <>
-            <main className="main-content">
+            <main>
                 <Routes>
                     <Route element={<PublicLayout />}>
                         <Route path="/login" element={<LoginPage />} />

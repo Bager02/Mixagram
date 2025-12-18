@@ -1,16 +1,16 @@
 .login-page {
     width: 100vw;
     height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-    position: relative;
-    overflow: hidden; /* ensures pseudo-element stays within bounds */
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background: linear-gradient(160deg, #ecfff2, #79b083);
 }
 
-/* Only the pseudo-element has the GIF */
 .login-page::before {
     content: "";
     position: absolute;
@@ -18,33 +18,30 @@
     left: 0;
     width: 100%;
     height: 100%;
-
     background-image: url('../assets/cat-kaikohoshi.gif');
-    background-size: contain;     
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-
-    opacity: 0.5;  /* lower opacity */
+    opacity: 0.15;
     z-index: 0;
 }
 
-/* Ensure form content is above GIF */
 .login-page > * {
     position: relative;
     z-index: 1;
 }
 
-/* Same approach for register page */
 .register-page {
     width: 100vw;
     height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-    position: relative;
-    overflow: hidden; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background: linear-gradient(160deg, #ecfff2, #79b083);
 }
 
 .register-page::before {
@@ -54,14 +51,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-
     background-image: url('../assets/cat-kaikohoshi.gif');
-    background-size: contain;     
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-
-    opacity: 0.5;                 
-    z-index: 0;                     
+    opacity: 0.15;
+    z-index: 0;
 }
 
 .register-page > * {

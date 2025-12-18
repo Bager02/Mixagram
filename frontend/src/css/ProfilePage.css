@@ -1,6 +1,7 @@
 .profile-posts-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(260px, max-content));
+    justify-content: center;
     gap: 24px;
     max-width: 1200px;
     margin: 32px auto;
@@ -26,7 +27,7 @@
 
 .profile-post-card .post-image {
     width: 100%;
-    height: 300px; 
+    aspect-ratio: 4 / 5;
     overflow: hidden;
     background: #79b083;
 }
@@ -88,20 +89,15 @@
     font-size: 16px;
     font-weight: 500;
     color: #5b6f63;
-    margin: 32px 24px; /* spacing from profile bar and page edges */
+    margin: 32px 24px; 
     text-align: left;
     align-self: center;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
+@media (max-width: 901px) {
     .profile-posts-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
-    }
-
-    .profile-post-card .post-image {
-        height: 320px;
     }
 }
 
