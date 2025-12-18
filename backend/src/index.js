@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import postRoutes from './routes/PostRoutes.js';
-import authRoutes from './routes/AuthRoutes.js'
+import authRoutes from './routes/AuthRoutes.js';
+import profileRoutes from './routes/ProfileRoutes.js'
 import { sessionMiddleware } from './middleware/session.js';
 
 const app = express();
