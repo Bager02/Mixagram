@@ -1,0 +1,126 @@
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(42, 74, 53, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.popup-content {
+    background: linear-gradient(180deg, #ecfff2, #f2fff5);
+    padding: 32px 28px;
+    border-radius: 16px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    font-family: "Poppins", sans-serif;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.popup-content p {
+    font-size: 16px;
+    color: #386547;
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+    font-weight: 500;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.popup-confirm,
+.popup-cancel {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: "Poppins", sans-serif;
+    min-width: 100px;
+}
+
+.popup-confirm {
+    background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}
+
+.popup-confirm:hover {
+    background: linear-gradient(135deg, #e53935, #c62828);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(211, 47, 47, 0.4);
+}
+
+.popup-confirm:active {
+    transform: translateY(0);
+}
+
+.popup-cancel {
+    background: linear-gradient(135deg, #79b083, #52975f);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(82, 151, 95, 0.3);
+}
+
+.popup-cancel:hover {
+    background: linear-gradient(135deg, #8bc091, #5fa86d);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(82, 151, 95, 0.4);
+}
+
+.popup-cancel:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    .popup-content {
+        padding: 24px 20px;
+        max-width: 90%;
+    }
+
+    .popup-content p {
+        font-size: 15px;
+    }
+
+    .popup-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .popup-confirm,
+    .popup-cancel {
+        width: 100%;
+    }
+}

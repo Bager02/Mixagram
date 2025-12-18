@@ -91,3 +91,19 @@ export const getUserById = async (id) => {
     postCount: user._count?.posts ?? 0
   };
 };
+
+export const deleteUserService = async (userId) => {
+    const id = Number(userId);
+
+    const existingUser = await prisma.user.findUnique({
+        where: { id },
+    });
+
+    if (!existingUser) {
+        throw new Error("User not found");
+    }
+
+    return prisma.user.delete({
+        where: { id },
+    });
+};

@@ -1,5 +1,4 @@
 import { Routes, Route, Outlet } from 'react-router-dom'
-import { useAuth } from "./contexts/AuthContext";
 import { PostProvider } from './contexts/PostContext.jsx';
 import HomePage from './pages/HomePage.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'

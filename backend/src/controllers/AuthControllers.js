@@ -1,4 +1,4 @@
-import { createUserService, loginService, getUserById } from "../services/AuthServices.js";
+import { createUserService, loginService, getUserById, deleteUserService } from "../services/AuthServices.js";
 
 export const register = async (req, res) => {
     try {
@@ -26,6 +26,37 @@ export const register = async (req, res) => {
         // this var is sent to frontend NEEDS TO CHANGE
 
         res.status(500).json({ error: "Failed to create user" });
+    }
+};
+
+export const deleteUser = async (req, res) => {
+    try {
+        if (!req.session.userId) {
+            return res.status(401).json({ error: "Not logged in" });
+        }
+
+        const userId = req.session.userId;
+
+        await deleteUserService(userId);
+
+        req.session.destroy(err => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: "User deleted, but failed to destroy session" });
+            }
+
+            res.clearCookie("connect.sid", { path: "/" });
+            return res.status(200).json({ message: "User deleted successfully" });
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        if (err.message === "User not found") {
+            return res.status(404).json({ error: err.message });
+        }
+
+        return res.status(500).json({ error: "Failed to delete user" });
     }
 };
 
@@ -66,7 +97,7 @@ export const me = async (req, res) => {
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
     res.setHeader("Pragma", "no-cache");
     res.setHeader("Expires", "0");
-    
+
     try {
         if (!req.session.userId) {
             res.clearCookie("connect.sid");

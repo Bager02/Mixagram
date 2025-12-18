@@ -1,10 +1,12 @@
 import '../css/ProfileBar.css'
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { useState, useRef, useEffect } from 'react';
+import ConfirmPopup from "../components/ConfirmPopup.jsx";
 
 function ProfileBar() {
-    const { handleLogout, user } = useAuth();
+    const { handleLogout, handleDeleteUser, user } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -17,6 +19,18 @@ function ProfileBar() {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
+
+    const onDeleteClick = () => {
+        setIsConfirmOpen(true);
+        setIsDropdownOpen(false);
+    };
+
+    const onConfirmDelete = async () => {
+        setIsConfirmOpen(false);
+        await handleDeleteUser();
+    };
+
+    const onCancelDelete = () => setIsConfirmOpen(false);
 
     return (
         <>
@@ -36,8 +50,8 @@ function ProfileBar() {
                     </div>
                 </div>
                 <div className="profile-menu" ref={dropdownRef}>
-                    <button 
-                        className="menu-button" 
+                    <button
+                        className="menu-button"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     >
                         ⋮
@@ -52,7 +66,7 @@ function ProfileBar() {
                                 <span className="dropdown-icon">🚪</span>
                                 Logout
                             </button>
-                            <button className="dropdown-item delete" onClick={() => console.log('Delete profile')}>
+                            <button className="dropdown-item delete" onClick={onDeleteClick}>
                                 <span className="dropdown-icon">🗑️</span>
                                 Delete Profile
                             </button>
@@ -60,6 +74,12 @@ function ProfileBar() {
                     )}
                 </div>
             </div>
+            <ConfirmPopup
+                isOpen={isConfirmOpen}
+                message="Are you sure you want to delete your account? This action cannot be undone."
+                onConfirm={onConfirmDelete}
+                onCancel={onCancelDelete}
+            />
             <div className="profile-divider"></div>
         </>
     );

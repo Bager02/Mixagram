@@ -21,6 +21,21 @@ export async function registerUser(data) {
     return result;
 }
 
+export async function deleteCurrentUser() {
+    const res = await fetch(`${API_URL}/auth/me`, {
+        method: "DELETE",
+        credentials: "include",
+    });
+
+    const result = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+        throw new Error(result.error || "Failed to delete user");
+    }
+
+    return result;
+}
+
 export async function loginUser(data) {
     const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { registerUser, loginUser, getCurrentUser, logoutUser } from "../services/AuthService";
+import { registerUser, loginUser, getCurrentUser, logoutUser, deleteCurrentUser } from "../services/AuthService";
 import { fetchPostsFromUser } from "../services/PostService";
 import { useLocation } from "react-router-dom";
 
@@ -132,6 +132,22 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const handleDeleteUser = async () => {
+        setLoading(true);
+        setError({});
+
+        try {
+            await deleteCurrentUser();
+            setUser(null);
+            setUserPosts([]);
+        } catch (err) {
+            console.error(err);
+            setError({ general: err.message || "Failed to delete account" });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -142,6 +158,7 @@ export function AuthProvider({ children }) {
                 handleSubmitLogin,
                 handleChangeLogin,
                 handleLogout,
+                handleDeleteUser,
                 clearAuthError,
                 userPosts,
                 user,
