@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { registerUser, loginUser, getCurrentUser, logoutUser, deleteCurrentUser } from "../services/AuthService";
+import { registerUser, loginUser, getCurrentUser, logoutUser, deleteCurrentUser, updateProfile } from "../services/AuthService";
 import { fetchPostsFromUser } from "../services/PostService";
 import { useLocation } from "react-router-dom";
 
@@ -148,6 +148,26 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const handleProfileUpdate = async (data) => {
+        setLoading(true);
+        setError({});
+
+        try {
+            const updatedFields = await updateProfile(data); // only updated fields
+            setUser(prevUser => ({
+                ...prevUser,      
+                ...updatedFields  
+            }));
+            return updatedFields;
+        } catch (err) {
+            console.error(err);
+            setError({ general: err.message || "Failed to update profile" });
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -159,6 +179,7 @@ export function AuthProvider({ children }) {
                 handleChangeLogin,
                 handleLogout,
                 handleDeleteUser,
+                handleProfileUpdate,
                 clearAuthError,
                 userPosts,
                 user,

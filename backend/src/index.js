@@ -18,9 +18,7 @@ app.use(sessionMiddleware);
 
 app.use('/posts', postRoutes);  
 app.use('/auth', authRoutes);
-app.get('/check-session', (req, res) => {
-    res.json(req.session);
-});
+app.use('/user', profileRoutes);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {

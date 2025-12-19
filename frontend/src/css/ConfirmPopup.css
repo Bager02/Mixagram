@@ -104,6 +104,148 @@
     transform: translateY(0);
 }
 
+/*---------------------------------------------------------*/
+
+.edit-profile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(42, 74, 53, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.edit-profile-popup {
+    background: linear-gradient(180deg, #ecfff2, #f2fff5);
+    padding: 32px 28px;
+    border-radius: 16px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    font-family: "Poppins", sans-serif;
+    animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.edit-profile-popup h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #386547;
+    margin: 0 0 24px 0;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+.edit-profile-popup input,
+.edit-profile-popup textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #dff7e6;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    color: #386547;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    outline: none;
+}
+
+.edit-profile-popup input::placeholder,
+.edit-profile-popup textarea::placeholder {
+    color: #79b083;
+    opacity: 0.6;
+}
+
+.edit-profile-popup input:focus,
+.edit-profile-popup textarea:focus {
+    border-color: #52975f;
+    box-shadow: 0 0 0 3px rgba(82, 151, 95, 0.1);
+}
+
+.edit-profile-popup textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.edit-profile-popup .popup-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.edit-profile-popup .popup-buttons button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    font-family: "Poppins", sans-serif;
+    min-width: 100px;
+}
+
+.edit-profile-popup .popup-buttons button:first-child {
+    background: linear-gradient(135deg, #52975f, #386547);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(82, 151, 95, 0.3);
+}
+
+.edit-profile-popup .popup-buttons button:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(82, 151, 95, 0.4);
+}
+
+.edit-profile-popup .popup-buttons button:last-child {
+    background: linear-gradient(135deg, #a8c9b0, #8ba896);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(168, 201, 176, 0.3);
+}
+
+.edit-profile-popup .popup-buttons button:last-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(168, 201, 176, 0.4);
+}
+
+@media (max-width: 600px) {
+    .edit-profile-popup {
+        padding: 24px 20px;
+        max-width: 90%;
+    }
+
+    .edit-profile-popup h3 {
+        font-size: 20px;
+    }
+
+    .edit-profile-popup .popup-buttons {
+        flex-direction: column;
+    }
+
+    .edit-profile-popup .popup-buttons button {
+        width: 100%;
+    }
+}
+
 @media (max-width: 600px) {
     .popup-content {
         padding: 24px 20px;

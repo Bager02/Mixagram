@@ -1,15 +1,13 @@
-
-
 const API_URL = import.meta.env.VITE_API_URL;
 
-export async function registerUser(data) {
+export async function registerUser({ username, email, password }) {
     const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(data),
+        body: JSON.stringify({ username, email, password }),
     });
 
     const result = await res.json();
@@ -36,14 +34,14 @@ export async function deleteCurrentUser() {
     return result;
 }
 
-export async function loginUser(data) {
+export async function loginUser({ username, password }) {
     const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(data),
+        body: JSON.stringify({ username, password }),
     });
 
     const result = await res.json();
@@ -82,4 +80,23 @@ export async function getCurrentUser() {
     }
 
     return await res.json();
+}
+
+export async function updateProfile({ username, bio }) {
+    const res = await fetch(`${API_URL}/user/me`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ username, bio }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.error || "Failed to update profile");
+    }
+
+    return data;
 }

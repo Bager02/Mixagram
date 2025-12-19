@@ -4,9 +4,12 @@ import { useState, useRef, useEffect } from 'react';
 import ConfirmPopup from "../components/ConfirmPopup.jsx";
 
 function ProfileBar() {
-    const { handleLogout, handleDeleteUser, user } = useAuth();
+    const { handleLogout, handleDeleteUser, handleProfileUpdate, user } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [newUsername, setNewUsername] = useState(user?.username || "");
+    const [newBio, setNewBio] = useState(user?.bio || "");
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -31,6 +34,25 @@ function ProfileBar() {
     };
 
     const onCancelDelete = () => setIsConfirmOpen(false);
+
+    const onEditClick = () => {
+        setNewUsername(user?.username || "");
+        setNewBio(user?.bio || "");
+        setIsEditOpen(true);
+        setIsDropdownOpen(false);
+    };
+
+    const onSaveEdit = async () => {
+        try {
+            await handleProfileUpdate({ username: newUsername, bio: newBio });
+            setIsEditOpen(false);
+        } catch (err) {
+            console.error(err);
+            alert(err.message || "Failed to update profile");
+        }
+    };
+
+    const onCancelEdit = () => setIsEditOpen(false);
 
     return (
         <>
@@ -58,7 +80,7 @@ function ProfileBar() {
                     </button>
                     {isDropdownOpen && (
                         <div className="dropdown-menu">
-                            <button className="dropdown-item" onClick={() => console.log('Edit profile')}>
+                            <button className="dropdown-item" onClick={onEditClick}>
                                 <span className="dropdown-icon">✏️</span>
                                 Edit Profile
                             </button>
@@ -80,6 +102,29 @@ function ProfileBar() {
                 onConfirm={onConfirmDelete}
                 onCancel={onCancelDelete}
             />
+            {isEditOpen && (
+                <div className="edit-profile-overlay">
+                    <div className="edit-profile-popup">
+                        <h3>Edit Profile</h3>
+                        <input
+                            type="text"
+                            value={newUsername}
+                            onChange={(e) => setNewUsername(e.target.value)}
+                            placeholder="Username"
+                        />
+                        <textarea
+                            value={newBio}
+                            onChange={(e) => setNewBio(e.target.value)}
+                            placeholder="Bio"
+                            rows={4}
+                        />
+                        <div className="popup-buttons">
+                            <button onClick={onSaveEdit}>Save</button>
+                            <button onClick={onCancelEdit}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="profile-divider"></div>
         </>
     );

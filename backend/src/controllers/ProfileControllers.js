@@ -1,1 +1,17 @@
-import {  } from "../services/ProfileServices.js";
+import { updateUserProfileService } from "../services/ProfileServices.js";
+
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.session.userId;
+
+        if (!userId) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+
+        const updatedUser = await updateUserProfileService(userId, req.body);
+
+        res.json(updatedUser);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+};
