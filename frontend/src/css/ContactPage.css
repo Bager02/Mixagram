@@ -1,0 +1,128 @@
+.contact-page {
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; 
+    background: linear-gradient(160deg, #ecfff2, #79b083);
+    overflow: hidden; 
+    box-sizing: border-box;
+    text-align: center; 
+}
+
+.contact-page.with-navbar {
+    padding-left: 300px;
+    padding-right: 20px;
+}
+
+.contact-container {
+    max-width: 700px;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(180deg, #ecfff2, #f2fff5);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    font-family: "Poppins", sans-serif;
+    position: relative;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(82, 151, 95, 0.1);
+    color: #386547;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin-bottom: 24px;
+}
+
+.back-button:hover {
+    background: rgba(82, 151, 95, 0.2);
+    transform: translateX(-4px);
+}
+
+.contact-container h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #386547;
+    margin: 0 0 40px 0;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.contact-section {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(82, 151, 95, 0.15);
+}
+
+.contact-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 40px;
+    padding-bottom: 0;
+}
+
+.contact-section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #386547;
+    margin: 0 0 12px 0;
+}
+
+.contact-section a {
+    color: #52975f;       
+    text-decoration: none; 
+    transition: all 0.2s ease;
+}
+
+.contact-section a:hover {
+    text-decoration: underline; 
+    color: #386547;              
+}
+.contact-footer {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(82, 151, 95, 0.15);
+}
+
+.contact-footer p {
+    font-size: 15px;
+    color: #79b083;
+    margin: 0;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .contact-page {
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .contact-page.with-navbar {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 90px;
+    }
+
+    .contact-container {
+        padding: 28px 24px;
+    }
+
+    .contact-container h1 {
+        font-size: 28px;
+        margin-bottom: 32px;
+    }
+
+    .contact-section h2 {
+        font-size: 20px;
+    }
+
+    .contact-section p {
+        font-size: 15px;
+    }
+}

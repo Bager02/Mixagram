@@ -58,6 +58,12 @@ function LoginForm({ onSuccess }) {
                     Sign up
                 </Link>
             </div>
+            <div className="contact-link-container">
+                <span>Need help?</span>
+                <Link to="/contact" className="contact-page-link">
+                    Contact us
+                </Link>
+            </div>
         </form>
     );
 }

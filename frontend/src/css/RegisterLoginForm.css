@@ -144,6 +144,31 @@ button:disabled {
     text-decoration: underline;
 }
 
+.contact-link-container {
+    margin-top: 16px;
+    text-align: center;
+    padding-top: 16px;
+    border-top: 1px solid rgba(121, 176, 131, 0.2);
+}
+
+.contact-link-container span {
+    font-size: 13px;
+    color: #79b083;
+}
+
+.contact-page-link {
+    color: #386547;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 6px;
+    transition: all 0.2s ease;
+}
+
+.contact-page-link:hover {
+    color: #2a4a35;
+    text-decoration: underline;
+}
+
 @media (max-width: 600px) {
     form {
         width: 90%;

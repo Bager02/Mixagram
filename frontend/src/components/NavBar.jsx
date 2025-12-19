@@ -12,37 +12,37 @@ function NavBar() {
                 <div className="nav-item">
                     <Link to="/user-profile">
                         <span className="nav-icon">👤</span>
-                        Profile
+                        <span className="nav-text">Profile</span>
                     </Link>
                 </div>
 
                 <div className="nav-item">
                     <Link to="/upload">
                         <span className="nav-icon">📤</span>
-                        Upload
+                        <span className="nav-text">Upload</span>
                     </Link>
                 </div>
 
                 <div className="nav-item">
                     <button>
                         <span className="nav-icon">💬</span>
-                        Chat
+                        <span className="nav-text">Chat</span>
                     </button>
                 </div>
 
                 <div className="nav-item">
                     <button>
                         <span className="nav-icon">❤️</span>
-                        Liked
+                        <span className="nav-text">Liked</span>
                     </button>
                 </div>
             </nav>
 
             <div className="sidebar-footer">
-                <button>
+                <Link to="/contact">
                     <span className="nav-icon">📧</span>
-                    Contact
-                </button>
+                    <span className="nav-text">Contact</span>
+                </Link>
             </div>
         </div>
     );
