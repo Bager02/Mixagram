@@ -4,13 +4,15 @@ import { useState, useRef, useEffect } from 'react';
 import ConfirmPopup from "../components/ConfirmPopup.jsx";
 
 function ProfileBar() {
-    const { handleLogout, handleDeleteUser, handleProfileUpdate, user } = useAuth();
+    const { handleLogout, handleDeleteUser, handleProfileUpdate, handleProfilePictureUpdate, user } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [newUsername, setNewUsername] = useState(user?.username || "");
     const [newBio, setNewBio] = useState(user?.bio || "");
+    const [previewImage, setPreviewImage] = useState(null);
     const dropdownRef = useRef(null);
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -54,14 +56,48 @@ function ProfileBar() {
 
     const onCancelEdit = () => setIsEditOpen(false);
 
+    const onAvatarClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const onProfilePictureChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => setPreviewImage(reader.result);
+        reader.readAsDataURL(file);
+
+        try {
+            const updatedUser = await handleProfilePictureUpdate(file);
+            setPreviewImage(null);
+        } catch (err) {
+            console.error(err);
+            alert(err.message || "Failed to update profile picture");
+            setPreviewImage(null);
+        }
+    };
+
     return (
         <>
             <div className="profile-bar">
                 <div className="profile-left">
                     <img
                         className="profile-avatar"
-                        src={user?.profileImage || 'https://i.imgur.com/OjqOzDB.png'}
+                        src={
+                            previewImage ||
+                            (user?.profileImage ?? 'http://localhost:8000/uploads/profile-pictures/default-pfp.png')
+                        }
                         alt="Profile"
+                        onClick={onAvatarClick}
+                        style={{ cursor: "pointer" }}
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        ref={fileInputRef}
+                        onChange={onProfilePictureChange}
+                        style={{ display: "none" }}
                     />
                     <div className="profile-text">
                         <h2 className="profile-name">{user?.username}</h2>

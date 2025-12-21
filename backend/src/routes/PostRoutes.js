@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { upload } from "../middleware/multer.js";
-import { fetchPosts, fetchPostsFromUser, createPost, deletePost } from "../controllers/PostControllers.js";
+import { uploadPost } from "../middleware/multer.js";
 import { requireAuth } from "../middleware/authMiddleware.js";
+import { fetchPosts, fetchPostsFromUser, createPost, deletePost } from "../controllers/PostControllers.js";
 
 const router = Router();
 
 router.get("/", requireAuth, fetchPosts);
 router.get("/user-posts", requireAuth, fetchPostsFromUser);
-router.post("/new-post", upload.single('file'), requireAuth, createPost);
+router.post("/new-post", uploadPost.single('file'), requireAuth, createPost);
 router.delete('/:postId', deletePost);
 
 export default router;

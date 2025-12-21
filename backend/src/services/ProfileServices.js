@@ -32,3 +32,27 @@ export const updateUserProfileService = async (userId, data) => {
         throw new Error("Failed to update profile");
     }
 };
+
+export const updateUserPfpService = async (userId, file) => {
+    if (!file) throw new Error("Profile picture is required");
+
+    try {
+        const updatedUser = await prisma.user.update({
+            where: { id: Number(userId) },
+            data: {
+                profile_image: `/uploads/profile-pictures/${file.filename}`
+            },
+            select: {
+                id: true,
+                username: true,
+                bio: true,
+                profile_image: true
+            }
+        });
+
+        return updatedUser;
+    } catch (err) {
+        console.error(err);
+        throw new Error("Failed to update profile picture");
+    }
+};

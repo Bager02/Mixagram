@@ -100,3 +100,22 @@ export async function updateProfile({ username, bio }) {
 
     return data;
 }
+
+export async function updateProfilePicture(file) {
+    const formData = new FormData();
+    formData.append("profile_picture", file);
+
+    const res = await fetch(`${API_URL}/user/profile-picture`, {
+        method: "PATCH",
+        credentials: "include",
+        body: formData,
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.error || "Failed to update profile picture");
+    }
+
+    return data;
+}

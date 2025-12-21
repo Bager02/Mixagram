@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { registerUser, loginUser, getCurrentUser, logoutUser, deleteCurrentUser, updateProfile } from "../services/AuthService";
+import { registerUser, loginUser, getCurrentUser, logoutUser, deleteCurrentUser, updateProfile, updateProfilePicture } from "../services/AuthService";
 import { fetchPostsFromUser } from "../services/PostService";
 import { useLocation } from "react-router-dom";
 
@@ -34,12 +34,19 @@ export function AuthProvider({ children }) {
 
             try {
                 const currentUser = await getCurrentUser();
-                setUser(currentUser);
 
                 if (currentUser) {
+                    const profileImagePath = currentUser.profile_image || currentUser.profileImage || '/uploads/profile-pictures/default-pfp.png';
+
+                    setUser({
+                        ...currentUser,
+                        profileImage: `http://localhost:8000${profileImagePath}`
+                    });
+
                     const posts = await fetchPostsFromUser();
                     setUserPosts(posts);
                 } else {
+                    setUser(null);
                     setUserPosts([]);
                 }
 
@@ -155,8 +162,8 @@ export function AuthProvider({ children }) {
         try {
             const updatedFields = await updateProfile(data); // only updated fields
             setUser(prevUser => ({
-                ...prevUser,      
-                ...updatedFields  
+                ...prevUser,
+                ...updatedFields
             }));
             return updatedFields;
         } catch (err) {
@@ -166,6 +173,16 @@ export function AuthProvider({ children }) {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleProfilePictureUpdate = async (file) => {
+        const updatedUser = await updateProfilePicture(file);
+        setUser(prev => ({
+            ...prev,
+            profileImage: `http://localhost:8000${updatedUser.profile_image}`
+        }));
+
+        return updatedUser;
     };
 
     return (
@@ -180,6 +197,7 @@ export function AuthProvider({ children }) {
                 handleLogout,
                 handleDeleteUser,
                 handleProfileUpdate,
+                handleProfilePictureUpdate,
                 clearAuthError,
                 userPosts,
                 user,
