@@ -10,7 +10,8 @@
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     font-family: "Poppins", sans-serif;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease;
+    will-change: transform;
 }
 
 .profile-left {
@@ -67,7 +68,6 @@
 }
 
 .menu-button {
-    padding: 8px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -77,11 +77,12 @@
     font-size: 24px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    will-change: transform;
 }
 
 .menu-button:hover {
@@ -99,18 +100,19 @@
     min-width: 180px;
     overflow: hidden;
     z-index: 100;
-    animation: slideDown 0.2s ease;
+
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    will-change: transform, opacity;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.dropdown-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .dropdown-item {
@@ -122,16 +124,21 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     gap: 10px;
     font-family: "Poppins", sans-serif;
     text-align: left;
+    transition: background-color 0.15s ease;
 }
 
 .dropdown-item:hover {
     background: #ecfff2;
+}
+
+.dropdown-item:active {
+    transition: none;
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .dropdown-item.logout {
@@ -164,10 +171,8 @@
     border-radius: 1px;
 }
 
-@media(max-width:768px) {
+@media (max-width: 768px) {
     .profile-bar {
-        width: calc(100% - 40px);
-        max-width: none;
         padding: 14px 16px;
         border-radius: 16px;
     }
@@ -182,7 +187,6 @@
     }
 
     .menu-button {
-        padding: 6px 10px;
         font-size: 20px;
     }
 
@@ -193,10 +197,5 @@
     .dropdown-item {
         padding: 10px 14px;
         font-size: 13px;
-    }
-
-    .profile-divider {
-        width: calc(100% - 40px);
-        max-width: none;
     }
 }
