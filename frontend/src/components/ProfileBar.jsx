@@ -79,7 +79,7 @@ function ProfileBar() {
                         ⋮
                     </button>
                     {isDropdownOpen && (
-                        <div className="dropdown-menu">
+                        <div className="dropdown-menu open">
                             <button className="dropdown-item" onClick={onEditClick}>
                                 <span className="dropdown-icon">✏️</span>
                                 Edit Profile

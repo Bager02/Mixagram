@@ -1,18 +1,22 @@
 import ProfileBar from '../components/ProfileBar.jsx'
 import ProfilePostCard from "../components/ProfilePostCard.jsx";
-import { useAuth } from "../contexts/AuthContext";
+import { usePosts } from "../contexts/PostContext";
+import { useEffect } from "react";
 import '../css/ProfilePage.css'
 import '../css/MainLayout.css';
 
 function ProfilePage() {
-    const { userPosts } = useAuth();
+    const { posts, fetchUserPosts } = usePosts();
+    useEffect(() => {
+        fetchUserPosts();
+    }, []);
 
     return (
         <div className="main-content">
             <ProfileBar />
-            {userPosts.length > 0 ? (
+            {posts.length > 0 ? (
                 <div className="profile-posts-grid">
-                    {userPosts.map(post => (
+                    {posts.map(post => (
                         <ProfilePostCard key={post.id} post={post} />
                     ))}
                 </div>

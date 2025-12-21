@@ -1,4 +1,4 @@
-import { fetchPostsService, fetchPostsFromUserService, createPostService } from "../services/PostServices.js";
+import { fetchPostsService, fetchPostsFromUserService, createPostService, deletePostService } from "../services/PostServices.js";
 
 const mapImageUrl = (req, url, fallback = null) => {
     if (!url) return fallback;
@@ -52,5 +52,35 @@ export const createPost = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(400).json({ error: err.message || 'Failed to create post' });
+    }
+};
+
+export const deletePost = async (req, res) => {
+    try {
+        if (!req.session.userId) {
+            return res.status(401).json({ error: 'Not logged in' });
+        }
+
+        const { postId } = req.params;
+
+        if (!postId || isNaN(postId)) {
+            return res.status(400).json({ error: 'Invalid post id' });
+        }
+
+        const deletedPost = await deletePostService(
+            req.session.userId,
+            Number(postId)
+        );
+
+        res.json({
+            message: 'Post deleted successfully',
+            postId: deletedPost.id
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({
+            error: err.message || 'Failed to delete post'
+        });
     }
 };

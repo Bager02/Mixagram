@@ -1,9 +1,13 @@
 import PostCard from '../components/PostCard.jsx'
 import { usePosts } from '../contexts/PostContext.jsx';
+import { useEffect } from "react";
 import '../css/MainLayout.css';
 
 function HomePage() {
-    const { posts } = usePosts();
+    const { posts, fetchAllPosts  } = usePosts();
+    useEffect(() => {
+        fetchAllPosts();
+    }, []);
 
     return (
         <div className="main-content">

@@ -56,3 +56,34 @@ export const createPostService = async (userId, file, body) => {
         data: postData
     });
 };
+
+export const deletePostService = async (userId, postId) => {
+    try {
+        const post = await prisma.post.findUnique({
+            where: { id: Number(postId) },
+            select: {
+                id: true,
+                user_id: true,
+                post_image_url: true
+            }
+        });
+
+        if (!post) {
+            throw new Error("Post not found");
+        }
+
+        if (post.user_id !== Number(userId)) {
+            throw new Error("Unauthorized");
+        }
+
+        await prisma.post.delete({
+            where: { id: Number(postId) }
+        });
+
+        return post;
+
+    } catch (err) {
+        console.error(err);
+        throw new Error("Failed to delete post");
+    }
+};

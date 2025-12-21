@@ -38,3 +38,18 @@ export async function fetchPostsFromUser() {
 
     return await res.json();
 }
+
+export async function deletePost(postId) {
+    const res = await fetch(`${API_URL}/posts/${postId}`, {
+        method: "DELETE",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        throw new Error(data.error || "Failed to delete post");
+    }
+
+    return data; 
+}
