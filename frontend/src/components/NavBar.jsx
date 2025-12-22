@@ -31,10 +31,10 @@ function NavBar() {
                 </div>
 
                 <div className="nav-item">
-                    <button>
+                    <Link to="/liked-posts">
                         <span className="nav-icon">❤️</span>
                         <span className="nav-text">Liked</span>
-                    </button>
+                    </Link>
                 </div>
             </nav>
 

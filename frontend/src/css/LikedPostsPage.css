@@ -1,0 +1,115 @@
+.liked-posts-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.liked-posts-header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #386547;
+    margin: 0 0 12px 0;
+    letter-spacing: 0.5px;
+    font-family: "Poppins", sans-serif;
+}
+
+.liked-posts-header p {
+    font-size: 16px;
+    color: #52975f;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+.liked-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 32px auto;
+    padding: 0 24px;
+}
+
+.liked-posts-grid .post {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+.liked-posts-grid .post-user-info {
+    padding: 14px 18px;
+}
+
+.liked-posts-grid .post-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #79b083;
+}
+
+.liked-posts-grid .post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.liked-posts-grid .post-content {
+    padding: 16px 18px 18px;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+}
+
+.liked-posts-grid .post-title {
+    -webkit-line-clamp: 2;
+}
+
+.liked-posts-grid .post-description {
+    -webkit-line-clamp: 2;
+    flex: 1;
+}
+
+.no-liked-posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.6;
+}
+
+.no-liked-posts p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #386547;
+    margin: 0 0 8px 0;
+}
+
+.empty-subtext {
+    font-size: 14px;
+    color: #79b083;
+}
+
+@media (max-width: 901px) {
+    .liked-posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .liked-posts-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 0 16px;
+    }
+
+    .liked-posts-grid .post-image {
+        aspect-ratio: 4 / 5;
+    }
+}

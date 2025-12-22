@@ -1,7 +1,6 @@
 .profile-posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, max-content));
-    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
     max-width: 1200px;
     margin: 32px auto;
@@ -9,57 +8,60 @@
 }
 
 .profile-post-card {
-    background: #ecfff2;
-    border-radius: 12px;
+    background: linear-gradient(180deg, #ecfff2, #f2fff5);
+    border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     transition: all 0.25s ease;
     cursor: pointer;
     font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .profile-post-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
 }
 
 .profile-post-card .post-image {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: #79b083;
+    background: linear-gradient(135deg, #79b083, #52975f);
+    position: relative;
 }
 
 .profile-post-card .post-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
 }
 
 .profile-post-card:hover .post-image img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .profile-post-card .post-info {
-    padding: 16px;
-    background: linear-gradient(180deg, #ecfff2, #f2fff5);
-    flex: 1;
+    padding: 18px;
+    background: transparent;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 8px;
+    min-height: 120px;
 }
 
 .profile-post-card .post-title {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
-    margin: 0 0 8px 0;
+    margin: 0;
     color: #386547;
     line-height: 1.3;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 
@@ -67,42 +69,46 @@
     font-size: 13px;
     color: #52975f;
     line-height: 1.5;
-    margin: 0 0 10px 0;
+    margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    flex: 1;
 }
 
 .profile-post-card .post-likes {
     font-size: 14px;
-    font-weight: 500;
-    color: #52975f;
-    margin: 0;
+    font-weight: 600;
+    color: #386547;
+    margin: 8px 0 0 0;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(82, 151, 95, 0.15);
 }
 
 .no-posts-message {
     font-family: "Poppins", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
     color: #5b6f63;
-    margin: 32px 24px; 
-    text-align: left;
-    align-self: center;
+    margin: 60px auto;
+    text-align: center;
 }
 
 .delete-button {
     position: absolute;
     top: 12px;
     right: 12px;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     border: none;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
     color: #ffffff;
     font-size: 18px;
     cursor: pointer;
@@ -111,7 +117,8 @@
     justify-content: center;
     transition: all 0.2s ease;
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.85);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .profile-post-card:hover .delete-button {
@@ -120,8 +127,9 @@
 }
 
 .delete-button:hover {
-    background: rgba(211, 47, 47, 0.9);
-    transform: scale(1.05);
+    background: rgba(211, 47, 47, 0.95);
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(211, 47, 47, 0.4);
 }
 
 .delete-button:active {
@@ -143,11 +151,11 @@
     }
 
     .profile-post-card .post-image {
-        height: 300px;
+        aspect-ratio: 4 / 5;
     }
 
     .delete-button {
-        opacity: 0.7;
+        opacity: 0.8;
         transform: scale(1);
     }
 }
