@@ -8,13 +8,28 @@ export const PostProvider = ({ children }) => {
 
     useEffect(() => { }, []);
 
+    async function toggleLikeOnPost(postId, liked) {
+        setPosts(prevPosts =>
+            prevPosts.map(post => {
+                if (post.id === postId) {
+                    return {
+                        ...post,
+                        isLiked: liked,
+                        likesCount: liked ? post.likesCount + 1 : post.likesCount - 1
+                    };
+                }
+                return post;
+            })
+        );
+    }
+
     async function fetchAllPosts() {
         try {
             const data = await fetchPosts();
             setPosts(Array.isArray(data) ? data : []);
         } catch (err) {
             console.error("Failed to fetch all posts:", err);
-            setPosts([]); 
+            setPosts([]);
         }
     }
 
@@ -24,7 +39,7 @@ export const PostProvider = ({ children }) => {
             setPosts(Array.isArray(data) ? data : []);
         } catch (err) {
             console.error("Failed to fetch user posts:", err);
-            setPosts([]); 
+            setPosts([]);
         }
     }
 
@@ -57,7 +72,8 @@ export const PostProvider = ({ children }) => {
                 fetchAllPosts,
                 fetchUserPosts,
                 addPost,
-                deletePostFromUser
+                deletePostFromUser,
+                toggleLikeOnPost
             }}
         >
             {children}

@@ -37,7 +37,7 @@ function ProfilePostCard({ post }) {
                 <div className="post-info">
                     <h3 className="post-title">{post.title}</h3>
                     <p className="post-description">{post.description}</p>
-                    <p className="post-likes">❤ {post.likes}</p>
+                    <p className="post-likes">❤ {post.likesCount || 0}</p>
                 </div>
             </div>
             <ConfirmPopup

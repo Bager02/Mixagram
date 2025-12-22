@@ -1,6 +1,16 @@
 import '../css/PostCard.css'
+import { useLike } from '../contexts/LikeContext.jsx';
+import { usePosts } from '../contexts/PostContext';
 
 function PostCard({ post }) {
+    const { likedPosts, handleToggleLike } = useLike();
+    const { toggleLikeOnPost } = usePosts();
+    const isLiked = likedPosts.includes(post.id);
+
+    const toggleLike = async () => {
+        const result = await handleToggleLike(post.id);
+        toggleLikeOnPost(post.id, result);
+    };
 
     return (
         <div className="post">
@@ -17,8 +27,10 @@ function PostCard({ post }) {
             </div>
             <div className="post-content">
                 <div className="post-actions">
-                    <button className="like-button">❤</button>
-                    <p className="like-count">{post.likes ?? 0} likes</p>
+                    <button className="like-button" onClick={toggleLike}>
+                        {isLiked ? '❤️' : '🤍'}
+                    </button>
+                    <p className="like-count">{post.likesCount ?? 0} likes</p>
                 </div>
                 <h2 className="post-title">{post.title || 'Untitled'}</h2>
                 <p className="post-description">{post.description || ''}</p>

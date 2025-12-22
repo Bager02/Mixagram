@@ -1,5 +1,6 @@
 import { fetchPostsService, fetchPostsFromUserService, createPostService, deletePostService } from "../services/PostServices.js";
 
+//Utility for mapping images
 const mapImageUrl = (req, url, fallback = null) => {
     if (!url) return fallback;
     return url.startsWith('http') ? url : `${req.protocol}://${req.get('host')}${url}`;
@@ -7,18 +8,23 @@ const mapImageUrl = (req, url, fallback = null) => {
 
 export const fetchPosts = async (req, res) => {
     try {
-        const posts = await fetchPostsService();
+        const posts = await fetchPostsService(req.session.userId);
 
-        const mappedPosts = posts.map(post => ({
+        const response = posts.map(post => ({
             ...post,
             post_image_url: mapImageUrl(req, post.post_image_url),
             user: {
                 ...post.user,
-                profile_image: mapImageUrl(req, post.user.profile_image, '/default-avatar.jpg')
+                profile_image: mapImageUrl(
+                    req,
+                    post.user.profile_image,
+                    '/default-avatar.jpg'
+                )
             }
         }));
 
-        res.json(mappedPosts);
+        res.status(200).json(response);
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to fetch posts' });

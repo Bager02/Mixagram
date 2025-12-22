@@ -3,6 +3,7 @@ import cors from 'cors';
 import postRoutes from './routes/PostRoutes.js';
 import authRoutes from './routes/AuthRoutes.js';
 import profileRoutes from './routes/ProfileRoutes.js'
+import likeRoutes from './routes/LikedRoutes.js';
 import { sessionMiddleware } from './middleware/session.js';
 
 const app = express();
@@ -17,6 +18,7 @@ app.use('/uploads', express.static('uploads'));
 app.use(sessionMiddleware);
 
 app.use('/posts', postRoutes);  
+app.use('/posts', likeRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', profileRoutes);
 
