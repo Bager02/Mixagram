@@ -6,14 +6,13 @@ import '../css/LikedPostsPage.css';
 import '../css/MainLayout.css';
 
 function LikedPostsPage() {
-    const { likedPosts, handleToggleLike } = useLike();
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const loadLikedPosts = async () => {
             try {
                 const data = await fetchLikedPosts();
-                setPosts(data); 
+                setPosts(data);
             } catch (err) {
                 console.error('Failed to load liked posts:', err);
                 setPosts([]);
@@ -43,18 +42,7 @@ function LikedPostsPage() {
                     {posts.map(post => (
                         <PostCard
                             key={post.id}
-                            post={post}
-                            isLiked={likedPosts.includes(post.id)}
-                            onToggleLike={async () => {
-                                const result = await handleToggleLike(post.id);
-                                setPosts(prevPosts =>
-                                    prevPosts.map(p =>
-                                        p.id === post.id
-                                            ? { ...p, likesCount: p.likesCount + (result ? 1 : -1) }
-                                            : p
-                                    )
-                                );
-                            }}
+                            post={post} 
                         />
                     ))}
                 </div>

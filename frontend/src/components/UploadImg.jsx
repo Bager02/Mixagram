@@ -20,12 +20,10 @@ function UploadImg() {
         e.currentTarget.style.setProperty("--y", `${y}px`);
     }
 
-    // Unified click handler to open file picker
     function openFilePicker() {
         fileInputRef.current?.click();
     }
 
-    // Update state whenever a file is selected
     function handleFileSelect(e) {
         const selected = e.target.files[0];
         if (selected) setFile(selected);
@@ -46,7 +44,6 @@ function UploadImg() {
             const newPost = await addPost(formData);
             console.log("Uploaded and added to feed:", newPost);
 
-            // Reset form
             setTitle("");
             setDescription("");
             setFile(null);
@@ -75,7 +72,6 @@ function UploadImg() {
                     rows="4"
                 />
 
-                {/* Hidden file input always present */}
                 <input
                     type="file"
                     ref={fileInputRef}

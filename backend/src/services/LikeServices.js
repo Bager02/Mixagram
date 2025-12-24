@@ -58,6 +58,7 @@ export const getLikedPostsService = async (userId) => {
                         title: true,
                         description: true,
                         post_image_url: true,
+                        created_at: true,
                         user: {
                             select: {
                                 id: true,
@@ -65,7 +66,7 @@ export const getLikedPostsService = async (userId) => {
                                 profile_image: true
                             }
                         },
-                        _count: { select: { likes: true } }
+                        _count: { select: { likes: true, comments: true } } 
                     }
                 }
             },
@@ -75,6 +76,7 @@ export const getLikedPostsService = async (userId) => {
         return likes.map(like => ({
             ...like.post,
             likesCount: like.post._count.likes,
+            commentsCount: like.post._count.comments, 
             isLiked: true
         }));
     } catch (err) {

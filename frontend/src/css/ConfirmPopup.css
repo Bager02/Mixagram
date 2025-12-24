@@ -5,7 +5,6 @@
     right: 0;
     bottom: 0;
     background: rgba(42, 74, 53, 0.6);
-    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -113,7 +112,6 @@
     right: 0;
     bottom: 0;
     background: rgba(42, 74, 53, 0.6);
-    backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
