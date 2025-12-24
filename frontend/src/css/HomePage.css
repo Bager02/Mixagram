@@ -1,0 +1,49 @@
+.posts-container {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.no-results-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.no-results p {
+    font-size: 20px;
+    font-weight: 600;
+    color: #386547;
+    margin: 0 0 8px 0;
+}
+
+.no-results-subtext {
+    font-size: 14px;
+    color: #79b083;
+}
+
+@media (max-width: 768px) {
+    .posts-container {
+        max-width: 100%;
+    }
+
+    .posts-list {
+        gap: 20px;
+    }
+}
