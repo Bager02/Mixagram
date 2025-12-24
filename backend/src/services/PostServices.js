@@ -5,8 +5,22 @@ export const fetchPostsService = async (currentUserId) => {
         const posts = await prisma.post.findMany({
             orderBy: { created_at: 'desc' },
             include: {
-                user: true,
-                likes: { select: { user_id: true } }
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        profile_image: true
+                    }
+                },
+                likes: {
+                    select: { user_id: true }
+                },
+                _count: {
+                    select: {
+                        likes: true,
+                        comments: true
+                    }
+                }
             }
         });
 
@@ -16,12 +30,9 @@ export const fetchPostsService = async (currentUserId) => {
             description: post.description,
             post_image_url: post.post_image_url,
             created_at: post.created_at,
-            user: {
-                id: post.user.id,
-                username: post.user.username,
-                profile_image: post.user.profile_image
-            },
-            likesCount: post.likes.length,
+            user: post.user,
+            likesCount: post._count.likes,
+            commentsCount: post._count.comments,
             isLiked: currentUserId
                 ? post.likes.some(l => l.user_id === Number(currentUserId))
                 : false
@@ -39,8 +50,22 @@ export const fetchPostsFromUserService = async (currentUserId) => {
             where: { user_id: Number(currentUserId) },
             orderBy: { created_at: 'desc' },
             include: {
-                user: true,
-                likes: { select: { user_id: true } }
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        profile_image: true
+                    }
+                },
+                likes: {
+                    select: { user_id: true }
+                },
+                _count: {
+                    select: {
+                        likes: true,
+                        comments: true
+                    }
+                }
             }
         });
 
@@ -50,12 +75,9 @@ export const fetchPostsFromUserService = async (currentUserId) => {
             description: post.description,
             post_image_url: post.post_image_url,
             created_at: post.created_at,
-            user: {
-                id: post.user.id,
-                username: post.user.username,
-                profile_image: post.user.profile_image
-            },
-            likesCount: post.likes.length,
+            user: post.user,
+            likesCount: post._count.likes,
+            commentsCount: post._count.comments,
             isLiked: currentUserId
                 ? post.likes.some(l => l.user_id === Number(currentUserId))
                 : false

@@ -10,26 +10,28 @@ datasource db {
 }
 
 model Post {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   user_id        Int
-  user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user           User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
   post_image_url String?
   title          String
   description    String
-  created_at     DateTime @default(now())
-  likes          Like[]   
+  created_at     DateTime  @default(now())
+  likes          Like[]
+  comments       Comment[] 
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  username      String   @unique
-  email         String   @unique
+  id            Int       @id @default(autoincrement())
+  username      String    @unique
+  email         String    @unique
   password      String
   profile_image String?
   bio           String?
-  created_at    DateTime @default(now())
+  created_at    DateTime  @default(now())
   posts         Post[]
-  likes         Like[]   
+  likes         Like[]
+  comments      Comment[]  
 }
 
 model Like {
@@ -40,4 +42,15 @@ model Like {
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   @@unique([user_id, post_id]) 
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  content    String
+  user_id    Int
+  post_id    Int
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
 }

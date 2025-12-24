@@ -4,6 +4,8 @@ import postRoutes from './routes/PostRoutes.js';
 import authRoutes from './routes/AuthRoutes.js';
 import profileRoutes from './routes/ProfileRoutes.js'
 import likeRoutes from './routes/LikedRoutes.js';
+import commentRoutes from './routes/CommentRoutes.js';
+import utilityRoutes from './routes/UtilityRoutes.js';
 import { sessionMiddleware } from './middleware/session.js';
 
 const app = express();
@@ -19,8 +21,11 @@ app.use(sessionMiddleware);
 
 app.use('/posts', postRoutes);  
 app.use('/posts', likeRoutes);
+app.use('/posts', commentRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', profileRoutes);
+
+app.use('/utils', utilityRoutes);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
