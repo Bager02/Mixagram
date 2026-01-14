@@ -1,12 +1,21 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchPosts, uploadPost, deletePost, fetchPostsFromUser } from '../services/PostService.js';
+import {
+    fetchPosts,
+    uploadPost,
+    deletePost,
+    fetchPostsFromUser,
+    fetchFeedPostsPaginated
+} from '../services/PostService.js';
 
 const PostContext = createContext(null);
 
 export const PostProvider = ({ children }) => {
     const [posts, setPosts] = useState([]);
+    const [nextCursor, setNextCursor] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
 
-    useEffect(() => { }, []);
+    useEffect(() => {}, []);
 
     async function toggleLikeOnPost(postId, liked) {
         setPosts(prevPosts =>
@@ -15,7 +24,9 @@ export const PostProvider = ({ children }) => {
                     return {
                         ...post,
                         isLiked: liked,
-                        likesCount: liked ? post.likesCount + 1 : post.likesCount - 1
+                        likesCount: liked
+                            ? post.likesCount + 1
+                            : post.likesCount - 1
                     };
                 }
                 return post;
@@ -40,6 +51,44 @@ export const PostProvider = ({ children }) => {
         } catch (err) {
             console.error("Failed to fetch user posts:", err);
             setPosts([]);
+        }
+    }
+
+    async function fetchInitialFeed() {
+        try {
+            setIsLoading(true);
+
+            const { posts: newPosts, nextCursor } =
+                await fetchFeedPostsPaginated(null);
+
+            setPosts(newPosts);
+            setNextCursor(nextCursor);
+            setHasMore(nextCursor !== null);
+        } catch (err) {
+            console.error("Failed to fetch feed:", err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    async function fetchMoreFeedPosts() {
+        if (!hasMore || isLoading) return;
+
+        try {
+            setIsLoading(true);
+
+            const {
+                posts: newPosts,
+                nextCursor: newCursor
+            } = await fetchFeedPostsPaginated(nextCursor);
+
+            setPosts(prev => [...prev, ...newPosts]);
+            setNextCursor(newCursor);
+            setHasMore(newCursor !== null);
+        } catch (err) {
+            console.error("Failed to fetch more posts:", err);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -71,6 +120,10 @@ export const PostProvider = ({ children }) => {
                 setPosts,
                 fetchAllPosts,
                 fetchUserPosts,
+                fetchInitialFeed,
+                fetchMoreFeedPosts,
+                hasMore,
+                isLoading,
                 addPost,
                 deletePostFromUser,
                 toggleLikeOnPost
@@ -79,8 +132,8 @@ export const PostProvider = ({ children }) => {
             {children}
         </PostContext.Provider>
     );
-}
+};
 
 export const usePosts = () => {
     return useContext(PostContext);
-}
+};

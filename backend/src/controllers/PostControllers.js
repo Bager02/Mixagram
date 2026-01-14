@@ -1,4 +1,10 @@
-import { fetchPostsService, fetchPostsFromUserService, createPostService, deletePostService } from "../services/PostServices.js";
+import {
+    fetchPostsService,
+    fetchPostsFromUserService,
+    createPostService,
+    deletePostService,
+    fetchFeedPostsPaginatedService
+} from "../services/PostServices.js";
 
 //Utility for mapping images
 const mapImageUrl = (req, url, fallback = null) => {
@@ -87,6 +93,49 @@ export const deletePost = async (req, res) => {
         console.error(err);
         res.status(400).json({
             error: err.message || 'Failed to delete post'
+        });
+    }
+};
+
+export const fetchFeedPostsPaginated = async (req, res) => {
+    try {
+        const limit = req.query.limit
+            ? Number(req.query.limit)
+            : 10;
+
+        const cursor = req.query.cursor
+            ? Number(req.query.cursor)
+            : undefined;
+
+        const { posts, nextCursor } =
+            await fetchFeedPostsPaginatedService(
+                req.session.userId,
+                limit,
+                cursor
+            );
+
+        const mappedPosts = posts.map(post => ({
+            ...post,
+            post_image_url: mapImageUrl(req, post.post_image_url),
+            user: {
+                ...post.user,
+                profile_image: mapImageUrl(
+                    req,
+                    post.user.profile_image,
+                    '/default-avatar.jpg'
+                )
+            }
+        }));
+
+        res.status(200).json({
+            posts: mappedPosts,
+            nextCursor
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: 'Failed to fetch feed posts'
         });
     }
 };

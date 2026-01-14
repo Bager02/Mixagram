@@ -144,3 +144,62 @@ export const deletePostService = async (userId, postId) => {
         throw new Error("Failed to delete post");
     }
 };
+
+export const fetchFeedPostsPaginatedService = async (currentUserId, limit = 10, cursor) => {
+    try {
+        const posts = await prisma.post.findMany({
+            take: limit + 1,
+            skip: cursor ? 1 : 0,
+            cursor: cursor ? { id: Number(cursor) } : undefined,
+            orderBy: { created_at: 'desc' },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        profile_image: true
+                    }
+                },
+                likes: {
+                    select: { user_id: true }
+                },
+                _count: {
+                    select: {
+                        likes: true,
+                        comments: true
+                    }
+                }
+            }
+        });
+
+        let nextCursor = null;
+
+        if (posts.length > limit) {
+            const nextItem = posts.pop();
+            nextCursor = nextItem.id;
+        }
+
+        const mappedPosts = posts.map(post => ({
+            id: post.id,
+            title: post.title,
+            description: post.description,
+            post_image_url: post.post_image_url,
+            created_at: post.created_at,
+            user: post.user,
+            likesCount: post._count.likes,
+            commentsCount: post._count.comments,
+            isLiked: currentUserId
+                ? post.likes.some(l => l.user_id === Number(currentUserId))
+                : false
+        }));
+
+        return {
+            posts: mappedPosts,
+            nextCursor
+        };
+
+    } catch (err) {
+        console.error("fetchFeedPostsPaginatedService error:", err);
+        throw err;
+    }
+};

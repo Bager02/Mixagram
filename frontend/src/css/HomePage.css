@@ -10,6 +10,73 @@
     gap: 24px;
 }
 
+.scroll-sentinel {
+    padding: 40px 20px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.loading-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #52975f;
+    margin: 0;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.end-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #386547;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(180deg, #ecfff2, #f2fff5);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: inline-block;
+    position: relative;
+    animation: fadeInUp 0.5s ease;
+}
+
+.end-text::before,
+.end-text::after {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.7;
+}
+
+.end-text::before {
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.end-text::after {
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .no-results {
     display: flex;
     flex-direction: column;
@@ -45,5 +112,15 @@
 
     .posts-list {
         gap: 20px;
+    }
+
+    .end-text {
+        font-size: 15px;
+        padding: 16px;
+    }
+
+    .end-text::before,
+    .end-text::after {
+        font-size: 18px;
     }
 }
